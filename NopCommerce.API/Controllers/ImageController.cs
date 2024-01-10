@@ -16,55 +16,52 @@ namespace NopCommerce.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromForm] ProductImageUpload image)
+
+        public string Post([FromForm] ProductImageUpload image)
         {
-            Imagejoin obj = new Imagejoin();
-            obj.prod = new List<Products>();
-            obj.image = new ProductImageUpload();
             try
             {
-                if (obj != null && image != null)
-                {
-                    obj.image.Id = image.Id;
-                }
-                obj.image.Name = "\\Upload\\" + image.files.FileName;
-
                 if (image.files.Length > 0)
                 {
-
-
-
-                    // Check if the 'Uploads' folder exists, create it if not
+                    string Path = _webHostEnvironment.WebRootPath + "\\Upload\\";
                     if (!Directory.Exists(_webHostEnvironment.ContentRootPath + "\\Upload"))
                     {
                         Directory.CreateDirectory(_webHostEnvironment.ContentRootPath + "\\Upload\\");
                     }
 
-
-
-                    // Save the file to the specified path
                     using (FileStream fileStream = System.IO.File.Create(_webHostEnvironment.ContentRootPath + "\\Upload\\" + image.files.FileName))
                     {
                         image.files.CopyTo(fileStream);
                         fileStream.Flush();
+                        return "Upload Done";
                     }
-                    return Ok("Upload Done");
-                }
-                    
 
-                    
-                
+
+                }
                 else
                 {
-                    return BadRequest("No files uploaded");
+                    return "Failed";
                 }
-            }finally { }
-            
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
-        
-
-            
+        [HttpGet("{fileName}")]
+        public async Task<ActionResult> Get([FromRoute] string fileName)
+        {
+            string Path = _webHostEnvironment.ContentRootPath + "\\Upload\\";
+            var FilePath = Path + fileName + ".jpg";
+            if (System.IO.File.Exists(FilePath))
+            {
+                byte[] b = System.IO.File.ReadAllBytes(FilePath);
+                return File(b, "image/jpg");
+            }
+            return NotFound(); ;
+        }
     }
+}
 
 
 
