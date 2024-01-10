@@ -7,7 +7,7 @@ using static Contracts.ICatalog;
 
 namespace NOP.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ManufacturersController : ControllerBase

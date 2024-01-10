@@ -6,7 +6,7 @@ using static Contracts.ICatalog;
 
 namespace NOP.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CategoryController : ControllerBase
@@ -57,7 +57,7 @@ namespace NOP.Controllers
 
         public async Task<IActionResult> DeleteCategory(int ID)
         {
-            //var CategoryToDelete = await categoryRepository.DeleteCategories(ID);
+            
 
 
             await categoryRepository.DeleteCategories(ID);

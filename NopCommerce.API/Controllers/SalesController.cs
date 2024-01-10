@@ -9,7 +9,7 @@ using static Entities.Models.Sales.Order;
 
 namespace NOP.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class SalesController : ControllerBase

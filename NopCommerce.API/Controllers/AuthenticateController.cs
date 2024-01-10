@@ -9,207 +9,207 @@ using System.Text;
 
 namespace Authentication.API.Controllers
 {
-    //    [Route("api/[controller]")]
-    //    [ApiController]
-    //    public class AuthenticateController : ControllerBase
-    //    {
+    [Route("api/[controller]")]
+    [ApiController]
+    public class AuthenticateController : ControllerBase
+    {
 
-    //        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<IdentityUser> _userManager;
 
-    //        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-    //        private readonly IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
 
-    //        public AuthenticateController(
+        public AuthenticateController(
 
-    //            UserManager<IdentityUser> userManager,
+            UserManager<IdentityUser> userManager,
 
-    //            RoleManager<IdentityRole> roleManager,
+            RoleManager<IdentityRole> roleManager,
 
-    //            IConfiguration configuration)
+            IConfiguration configuration)
 
-    //        {
+        {
 
-    //            _userManager = userManager;
+            _userManager = userManager;
 
-    //            _roleManager = roleManager;
+            _roleManager = roleManager;
 
-    //            _configuration = configuration;
+            _configuration = configuration;
 
-    //        }
+        }
 
-    //        [HttpPost]
+        [HttpPost]
 
-    //        [Route("login")]
+        [Route("login")]
 
-    //        public async Task<IActionResult> Login([FromBody] Login model)
+        public async Task<IActionResult> Login([FromBody] Login model)
 
-    //        {
+        {
 
-    //            var user = await _userManager.FindByNameAsync(model.Username);
+            var user = await _userManager.FindByNameAsync(model.Username);
 
-    //            if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+            if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
 
-    //            {
+            {
 
-    //                var userRoles = await _userManager.GetRolesAsync(user);
+                var userRoles = await _userManager.GetRolesAsync(user);
 
-    //                var authClaims = new List<Claim>
+                var authClaims = new List<Claim>
 
-    //                {
+                    {
 
-    //                    new Claim(ClaimTypes.Name, user.UserName),
+                        new Claim(ClaimTypes.Name, user.UserName),
 
-    //                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
 
-    //                };
+                    };
 
-    //                foreach (var userRole in userRoles)
+                foreach (var userRole in userRoles)
 
-    //                {
+                {
 
-    //                    authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+                    authClaims.Add(new Claim(ClaimTypes.Role, userRole));
 
-    //                }
+                }
 
-    //                var token = GetToken(authClaims);
+                var token = GetToken(authClaims);
 
-    //                return Ok(new
+                return Ok(new
 
-    //                {
+                {
 
-    //                    token = new JwtSecurityTokenHandler().WriteToken(token),
+                    token = new JwtSecurityTokenHandler().WriteToken(token),
 
-    //                    expiration = token.ValidTo
+                    expiration = token.ValidTo
 
-    //                });
+                });
 
-    //            }
+            }
 
-    //            return Unauthorized();
+            return Unauthorized();
 
-    //        }
+        }
 
-    //        [HttpPost]
+        [HttpPost]
 
-    //        [Route("register")]
+        [Route("register")]
 
-    //        public async Task<IActionResult> Register([FromBody] Registration model)
+        public async Task<IActionResult> Register([FromBody] Registration model)
 
-    //        {
+        {
 
-    //            var userExists = await _userManager.FindByNameAsync(model.Username);
+            var userExists = await _userManager.FindByNameAsync(model.Username);
 
-    //            if (userExists != null)
+            if (userExists != null)
 
-    //                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
 
-    //            IdentityUser user = new()
+            IdentityUser user = new()
 
-    //            {
+            {
 
-    //                Email = model.Email,
+                Email = model.Email,
 
-    //                SecurityStamp = Guid.NewGuid().ToString(),
+                SecurityStamp = Guid.NewGuid().ToString(),
 
-    //                UserName = model.Username
+                UserName = model.Username
 
-    //            };
+            };
 
-    //            var result = await _userManager.CreateAsync(user, model.Password);
+            var result = await _userManager.CreateAsync(user, model.Password);
 
-    //            if (!result.Succeeded)
-    //            {
+            if (!result.Succeeded)
+            {
 
-    //                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
-    //            }
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
+            }
 
-    //            return Ok(new Response { Status = "Success", Message = "User created successfully!" });
+            return Ok(new Response { Status = "Success", Message = "User created successfully!" });
 
-    //        }
+        }
 
-    //        [HttpPost]
+        [HttpPost]
 
-    //        [Route("register-admin")]
+        [Route("register-admin")]
 
-    //        public async Task<IActionResult> RegisterAdmin([FromBody] Registration model)
+        public async Task<IActionResult> RegisterAdmin([FromBody] Registration model)
 
-    //        {
+        {
 
-    //            var userExists = await _userManager.FindByNameAsync(model.Username);
+            var userExists = await _userManager.FindByNameAsync(model.Username);
 
-    //            if (userExists != null)
+            if (userExists != null)
 
-    //                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
 
-    //            IdentityUser user = new()
+            IdentityUser user = new()
 
-    //            {
+            {
 
-    //                Email = model.Email,
+                Email = model.Email,
 
-    //                SecurityStamp = Guid.NewGuid().ToString(),
+                SecurityStamp = Guid.NewGuid().ToString(),
 
-    //                UserName = model.Username
+                UserName = model.Username
 
-    //            };
+            };
 
-    //            var result = await _userManager.CreateAsync(user, model.Password);
+            var result = await _userManager.CreateAsync(user, model.Password);
 
-    //            if (!result.Succeeded)
+            if (!result.Succeeded)
 
-    //                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
 
-    //            if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
+            if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
 
-    //                await _roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
+                await _roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
 
-    //            if (!await _roleManager.RoleExistsAsync(UserRoles.User))
+            if (!await _roleManager.RoleExistsAsync(UserRoles.User))
 
-    //                await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+                await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
 
-    //            if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
-    //            {
+            if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
+            {
 
-    //                await _userManager.AddToRoleAsync(user, UserRoles.Admin);
+                await _userManager.AddToRoleAsync(user, UserRoles.Admin);
 
-    //            }
+            }
 
-    //            if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
+            if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
 
-    //            {
+            {
 
-    //                await _userManager.AddToRoleAsync(user, UserRoles.User);
+                await _userManager.AddToRoleAsync(user, UserRoles.User);
 
-    //            }
+            }
 
-    //            return Ok(new Response { Status = "Success", Message = "User created successfully!" });
+            return Ok(new Response { Status = "Success", Message = "User created successfully!" });
 
-    //        }
+        }
 
-    //        private JwtSecurityToken GetToken(List<Claim> authClaims)
+        private JwtSecurityToken GetToken(List<Claim> authClaims)
 
-    //        {
+        {
 
-    //            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
+            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
 
-    //            var token = new JwtSecurityToken(
+            var token = new JwtSecurityToken(
 
-    //                issuer: _configuration["JWT:ValidIssuer"],
+                issuer: _configuration["JWT:ValidIssuer"],
 
-    //                audience: _configuration["JWT:ValidAudience"],
+                audience: _configuration["JWT:ValidAudience"],
 
-    //                expires: DateTime.Now.AddHours(3),
+                expires: DateTime.Now.AddHours(3),
 
-    //                claims: authClaims,
+                claims: authClaims,
 
-    //                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
 
-    //                );
+                );
 
-    //            return token;
+            return token;
 
-    //        }
+        }
 
-    //    }
+    }
 }

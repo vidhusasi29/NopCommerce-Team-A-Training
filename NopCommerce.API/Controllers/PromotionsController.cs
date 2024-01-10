@@ -6,7 +6,7 @@ using static Contracts.IPromotions;
 
 namespace NOP.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PromotionsController : ControllerBase

@@ -1,11 +1,13 @@
 ﻿using Contracts;
 using Entities.Models.Customers;
 using Entities.Models.Sales;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace NopCommerce.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class OrdersController : ControllerBase
