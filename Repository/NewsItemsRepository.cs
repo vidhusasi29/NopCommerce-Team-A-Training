@@ -60,7 +60,7 @@ namespace Repository
             return result;//return the updated news items or null if result not found
 
         }
-        public async Task<IActionResult> DeleteNewsItems(int DeleteNewsById)
+        public async Task<bool> DeleteNewsItems(int DeleteNewsById)
         {
             var result = await contextDB.NewsItems.
                 FirstOrDefaultAsync(e => e.Id == DeleteNewsById && !e.Is_Deleted);
@@ -69,9 +69,9 @@ namespace Repository
                 result.Is_Deleted = true;// Set IsDeleted to true for soft delete
                // contextDB.NewsItems.Remove(result);
                 await contextDB.SaveChangesAsync();
-                return new OkResult();//entity is found and deleted
+                return true;
             }
-            return new NotFoundResult();//entity is not found
+            return false;
 
         }
     }
