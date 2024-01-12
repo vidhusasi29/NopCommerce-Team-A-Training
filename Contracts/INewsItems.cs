@@ -15,6 +15,6 @@ namespace Contracts
         Task<NewsItems> GetNewsItems(int GetNewsItemsById);
         Task<NewsItems> AddNewsItems(NewsItems NewsAdded);
         Task<NewsItems> UpdateNewsItems(NewsItems NewsUpdate);
-        Task<IActionResult> DeleteNewsItems(int DeleteNewsById);
+        Task<bool> DeleteNewsItems(int DeleteNewsById);
     }
 }
