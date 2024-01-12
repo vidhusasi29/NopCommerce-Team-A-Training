@@ -11,7 +11,7 @@ namespace Contracts
     public interface INewsItems
     {
 
-        Task<IEnumerable<NewsItems>> GetNewsItems();
+        Task<IEnumerable<NewsItems>> GetNewsItemsList();
         Task<NewsItems> GetNewsItems(int GetNewsItemsById);
         Task<NewsItems> AddNewsItems(NewsItems NewsAdded);
         Task<NewsItems> UpdateNewsItems(NewsItems NewsUpdate);

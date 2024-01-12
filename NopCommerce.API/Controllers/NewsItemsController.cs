@@ -23,7 +23,7 @@ namespace NOP.Controllers
         [HttpGet("GetNewsItems")]
         public async Task<IEnumerable<NewsItems>> GetNewsItems()
         {
-            var newsitems = await _iNewsItems.GetNewsItems();
+            var newsitems = await _iNewsItems.GetNewsItemsList();
             return newsitems;
         }
 
@@ -67,7 +67,7 @@ namespace NOP.Controllers
         [HttpDelete("DeleteNewsItems/{Id}")]
         public async Task<ActionResult<NewsItems>> DeleteNewsItems(int Id)
         {
-            var existingNewsItems = await _iNewsItems.GetNewsItems();
+            var existingNewsItems = await _iNewsItems.GetNewsItemsList();
             if (!existingNewsItems.Any())
             {
                 return NotFound();

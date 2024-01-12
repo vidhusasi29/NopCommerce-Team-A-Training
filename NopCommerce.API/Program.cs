@@ -26,7 +26,7 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<ICustomers, Customerrepo>();
 builder.Services.AddScoped<IVendors, Customerrepo>();
 builder.Services.AddScoped<IAddress, Customerrepo>();
-builder.Services.AddScoped<INewsItems, NewsItemsImplement>();
+builder.Services.AddScoped<INewsItems, NewsItemsRepository>();
 builder.Services.AddScoped<Contracts.IPromotions.IDiscounts, PromotionsRepo>();
 builder.Services.AddScoped<IAffiliates,PromotionsRepo>();
 builder.Services.AddScoped<INewsletter, PromotionsRepo>();
