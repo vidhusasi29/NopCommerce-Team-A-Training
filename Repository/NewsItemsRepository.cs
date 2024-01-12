@@ -49,6 +49,8 @@ namespace Repository
                 result.Description = NewsUpdate.Description;
                 result.Start_Date = NewsUpdate.Start_Date;
                 result.End_Date = NewsUpdate.End_Date;
+                result.Modified_At = NewsUpdate.Modified_At;
+                result.Modified_By = NewsUpdate.Modified_By;
 
                 await contextDB.SaveChangesAsync();
 
